@@ -52,7 +52,7 @@ more information on how to get the key at https://coinlayer.com/product
 
  - [Quarkus.io](https://quarkus.io/)
  - [Vertx.io](https://vertx.io/)
- - [QUARKUS - GETTING STARTED WITH REACTIVE] (https://quarkus.io/guides/getting-started-reactive)
+ - [QUARKUS - GETTING STARTED WITH REACTIVE](https://quarkus.io/guides/getting-started-reactive)
  - [coinlayer - Real-time Crypto Currency Exchange Rates JSON Rest API](https://coinlayer.com)
  - [coinlayer - Real-time Crypto Currency Exchange Rates JSON Rest API](https://coinlayer.com)
  - [Hibernate with Panache](https://redhat-developer-demos.github.io/quarkus-tutorial/quarkus-tutorial/panache.html)
