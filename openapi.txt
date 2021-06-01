@@ -1,0 +1,422 @@
+---
+openapi: 3.0.3
+info:
+  title: Symbols Converters
+  description: Endpoint set for conversion api between two currencies using up-to-date
+    conversion rates
+  contact:
+    name: Maxwell Miranda Rosa
+    email: maxwellcsm@hotmail.com
+  version: 0.0.1
+tags:
+- name: Entities Persistence
+- name: Services
+paths:
+  /conversion:
+    get:
+      tags:
+      - Entities Persistence
+      description: Conversions histories those were had done
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Conversion'
+  /makeConversion:
+    post:
+      tags:
+      - Services
+      description: service responsible for carrying out currency conversion operations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OperationDTO'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /user:
+    get:
+      tags:
+      - Entities Persistence
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      tags:
+      - Entities Persistence
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: OK
+  /user/{id}:
+    put:
+      tags:
+      - Entities Persistence
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "204":
+          description: No Content
+    delete:
+      tags:
+      - Entities Persistence
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "204":
+          description: No Content
+components:
+  schemas:
+    Conversion:
+      type: object
+      properties:
+        currencySource:
+          type: string
+        currencyTarget:
+          type: string
+        fee:
+          format: double
+          type: number
+        user:
+          $ref: '#/components/schemas/User'
+        utcDate:
+          $ref: '#/components/schemas/Calendar'
+        valueSource:
+          format: double
+          type: number
+        valueTarget:
+          format: double
+          type: number
+    Calendar:
+      type: object
+      properties:
+        areFieldsSet:
+          type: boolean
+        fields:
+          type: array
+          items:
+            format: int32
+            type: integer
+        firstDayOfWeek:
+          format: int32
+          type: integer
+        isSet:
+          type: array
+          items:
+            type: boolean
+        isTimeSet:
+          type: boolean
+        lenient:
+          type: boolean
+        minimalDaysInFirstWeek:
+          format: int32
+          type: integer
+        nextStamp:
+          format: int32
+          type: integer
+        serialVersionOnStream:
+          format: int32
+          type: integer
+        time:
+          format: int64
+          type: integer
+        zone:
+          $ref: '#/components/schemas/TimeZone'
+        calendarType:
+          type: string
+        setStateFields:
+          format: int32
+          type: integer
+        timeInMillis:
+          format: int64
+          type: integer
+        timeZone:
+          $ref: '#/components/schemas/TimeZone'
+        weekYear:
+          format: int32
+          type: integer
+        weeksInWeekYear:
+          format: int32
+          type: integer
+        fullyNormalized:
+          type: boolean
+        partiallyNormalized:
+          type: boolean
+        weekDateSupported:
+          type: boolean
+        fieldsComputed:
+          format: int32
+          type: integer
+        fieldsNormalized:
+          format: int32
+          type: integer
+        weekCountData:
+          $ref: '#/components/schemas/Locale'
+        zoneShared:
+          type: boolean
+    Locale:
+      type: object
+      properties:
+        country:
+          type: string
+        displayCountry:
+          type: string
+        displayLanguage:
+          type: string
+        displayName:
+          type: string
+        displayScript:
+          type: string
+        displayVariant:
+          type: string
+        extensionKeys:
+          uniqueItems: true
+          type: array
+          items:
+            format: byte
+            type: string
+        iSO3Country:
+          type: string
+        iSO3Language:
+          type: string
+        language:
+          type: string
+        script:
+          type: string
+        unicodeLocaleAttributes:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        unicodeLocaleKeys:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        variant:
+          type: string
+    TimeZone:
+      type: object
+      properties:
+        ID:
+          type: string
+        dSTSavings:
+          format: int32
+          type: integer
+        displayName:
+          type: string
+        iD:
+          type: string
+        rawOffset:
+          format: int32
+          type: integer
+    User:
+      type: object
+      properties:
+        age:
+          type: string
+        name:
+          type: string
+        id:
+          format: int64
+          type: integer
+    OperationDTO:
+      type: object
+      properties:
+        currencySource:
+          type: string
+        currencyTarget:
+          type: string
+        fee:
+          format: double
+          type: number
+        idUser:
+          format: int64
+          type: integer
+        valueSource:
+          format: double
+          type: number
+    MultivaluedMapStringString:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          type: string
+    StatusType:
+      type: object
+      properties:
+        family:
+          $ref: '#/components/schemas/Family'
+        reasonPhrase:
+          type: string
+        statusCode:
+          format: int32
+          type: integer
+    Family:
+      enum:
+      - CLIENT_ERROR
+      - INFORMATIONAL
+      - OTHER
+      - REDIRECTION
+      - SERVER_ERROR
+      - SUCCESSFUL
+      type: string
+    MultivaluedMapStringObject:
+      type: object
+      additionalProperties:
+        type: array
+        items: {}
+    MediaType:
+      type: object
+      properties:
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+        subtype:
+          type: string
+        type:
+          type: string
+        wildcardSubtype:
+          type: boolean
+        wildcardType:
+          type: boolean
+    Link:
+      type: object
+      properties:
+        params:
+          type: object
+          additionalProperties:
+            type: string
+        rel:
+          type: string
+        rels:
+          type: array
+          items:
+            type: string
+        title:
+          type: string
+        type:
+          type: string
+        uri:
+          format: uri
+          type: string
+        uriBuilder:
+          $ref: '#/components/schemas/UriBuilder'
+    UriBuilder:
+      type: object
+    EntityTag:
+      type: object
+      properties:
+        value:
+          type: string
+        weak:
+          type: boolean
+    NewCookie:
+      type: object
+      properties:
+        domain:
+          type: string
+        name:
+          type: string
+        path:
+          type: string
+        value:
+          type: string
+        version:
+          format: int32
+          type: integer
+        comment:
+          type: string
+        expiry:
+          format: date
+          type: string
+        httpOnly:
+          type: boolean
+        maxAge:
+          format: int32
+          type: integer
+        secure:
+          type: boolean
+    Response:
+      type: object
+      properties:
+        allowedMethods:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        cookies:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/NewCookie'
+        date:
+          format: date
+          type: string
+        entity:
+          type: object
+        entityTag:
+          $ref: '#/components/schemas/EntityTag'
+        headers:
+          $ref: '#/components/schemas/MultivaluedMapStringObject'
+        language:
+          $ref: '#/components/schemas/Locale'
+        lastModified:
+          format: date
+          type: string
+        length:
+          format: int32
+          type: integer
+        links:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+        location:
+          format: uri
+          type: string
+        mediaType:
+          $ref: '#/components/schemas/MediaType'
+        metadata:
+          $ref: '#/components/schemas/MultivaluedMapStringObject'
+        status:
+          format: int32
+          type: integer
+        statusInfo:
+          $ref: '#/components/schemas/StatusType'
+        stringHeaders:
+          $ref: '#/components/schemas/MultivaluedMapStringString'

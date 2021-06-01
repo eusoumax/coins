@@ -1,8 +1,8 @@
-# coin-one project
+# coin-one(Currency Converter assistant) project
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+This project proposes to create an API for  Currency Conversion Conversion using conversion fee. This project uses Quarkus and vertx
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+If you want to learn more about Quarkus, please visit its websites: https://quarkus.io/ . and https://vertx.io/
 
 ## Running the application in dev mode
 
@@ -36,20 +36,27 @@ You can create a native executable using:
 ./mvnw package -Pnative
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
+
+### CoinLayer Configuration 
+
+In order to use the openlayer currency conversion api, it is necessary to add the key inside the application.properties file in the property: coinlayer.key
+
+more information on how to get the key at https://coinlayer.com/product
+
+### Endpoint Documentation
+
 ```shell script
-./mvnw package -Pnative -Dquarkus.native.container-build=true
+./openapi.txt
 ```
+### References
 
-You can then execute your native executable with: `./target/coin-one-1.0.0-SNAPSHOT-runner`
+ - [Quarkus.io](https://quarkus.io/)
+ - [Vertx.io](https://vertx.io/)
+ - [QUARKUS - GETTING STARTED WITH REACTIVE] (https://quarkus.io/guides/getting-started-reactive)
+ - [coinlayer - Real-time Crypto Currency Exchange Rates JSON Rest API](https://coinlayer.com)
+ - [coinlayer - Real-time Crypto Currency Exchange Rates JSON Rest API](https://coinlayer.com)
+ - [Hibernate with Panache](https://redhat-developer-demos.github.io/quarkus-tutorial/quarkus-tutorial/panache.html)
+ - [Quarkus - Use REST Data with Panache to implement CRUD applications](http://www.kubernetesnativeapps.io/quarkus/2020/06/04/quarkus-rest-data-panache.html)
+ - [Integration bettween Selenium and CCXT(CryptoCurrency eXchange Trading Library) - Python](https://gist.github.com/eusoumax/33800d4b489198d93cc1c84eac5f56c6)
+ - [Extraction of currency quotation - Using Selenium](https://gist.github.com/eusoumax/f5e6204f22c2f86a32ab6728b5822c52)
 
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.html.
-
-## Provided examples
-
-### RESTEasy JAX-RS example
-
-REST is easy peasy with this Hello World RESTEasy resource.
-
-[Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
-"# coins" 
