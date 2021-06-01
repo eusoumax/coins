@@ -113,11 +113,12 @@ public class ConversionTransationImpl {
             Double valueTarget = 0D;
             try{
                 valueTarget = operationResultDTO.getQuotes().get(key);
+                logger.debug(String.format("valueTarget of [%s] -> [%s]",operationDTO.getCurrencyTarget(),valueTarget));
             }catch(Exception e){
                 throw new Exception("Problems recovering currency value",e);
             }
             conversion.setValueTarget(valueTarget);
-            Conversion.persist(conversion);
+            //conversion.persist();
 
             OperationResponseDTO responseDTO = new OperationResponseDTO(conversion);
             logger.debug("transaction success id: +"+conversion.getId());				
@@ -125,7 +126,7 @@ public class ConversionTransationImpl {
 			
 		} catch (Exception e) {
 			logger.error("error on conversion currency", e);
-            throw e;	
+            return Response.status(Status.BAD_REQUEST).entity(new JsonObject().put("sucess", false).put("info", e.getMessage())).build();	
 		}
 
 
@@ -155,20 +156,15 @@ public class ConversionTransationImpl {
              //validateCurrencies(operationDTO);
              User user = findUser(operationDTO);
              
-             return client
-               //.getAbs(this.URL_COINLAYER_API)
+             return client               
                .getAbs(this.URL_COINLAYER_API)
                .ssl(false)
-               //addQueryParam("access_key", this.KEY_COIN_LAYER_API)
-               //.addQueryParam("source", operationDTO.getCurrencySource())
-               //.addQueryParam("currencies", operationDTO.getCurrencyTarget())
-               //.addQueryParam("format", "1")
-               //.expect(ResponsePredicate.SC_SUCCESS)
-               //.expect(ResponsePredicate.JSON)
-               //.expect(methodsPredicate)
-               .addQueryParam("access_key", "63c740aa238cc259257d005a3683f61c")
-               .addQueryParam("currencies", "BRL")
-               .addQueryParam("source", "USD")
+               .addQueryParam("access_key", this.KEY_COIN_LAYER_API)
+               .addQueryParam("currencies", operationDTO.getCurrencyTarget())               
+               .addQueryParam("source", operationDTO.getCurrencySource())
+              //.addQueryParam("access_key", "63c740aa238cc259257d005a3683f61c")
+               //.addQueryParam("currencies", "USD")
+               //.addQueryParam("source", "BRL")
                .addQueryParam("format", "1")
 
                .send().onItem().transform(resp -> {
@@ -295,6 +291,19 @@ public class ConversionTransationImpl {
 				logger.error("error ",e);	
 			}
 			return null;
+        }
+
+
+
+        private static Double calculateconversion(Double valueSource,Double valueTarget){
+
+            return valueSource * valueTarget;
+        }
+
+
+
+        public static void main(String args[]) {
+            System.out.println(calculateconversion(10D, 5.3D));
         }
     
 }
